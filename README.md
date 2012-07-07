@@ -25,6 +25,7 @@ Cartographie.map('New York, NY', width: 200, height: 200, zoom: 10)
 - width: 300
 - height: 300
 - zoom: 15
+- format: 'png'
 - sensor: false
 
 ## Contributing
