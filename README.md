@@ -14,7 +14,18 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'cartographie'
+Cartographie.map('San Francisco, CA')
+Cartographie.map('New York, NY', width: 200, height: 200, zoom: 10)
+```
+
+**Defaults**
+
+- width: 300
+- height: 300
+- zoom: 15
+- sensor: false
 
 ## Contributing
 
