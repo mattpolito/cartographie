@@ -3,6 +3,7 @@ require "cartographie/version"
 # Cartographie is the root module for all of Cartographie's components
 module Cartographie
 
+  autoload :Config, 'cartographie/config'
   autoload :Map, 'cartographie/map'
 
   # Public: Create a new Map instance.
@@ -23,6 +24,10 @@ module Cartographie
   # Returns an instance of Cartographie::Map
   def self.map(location = 'Paris, France', options={})
     Map.new(location, options)
+  end
+
+  def self.configure(&block)
+    Cartographie::Config.configure(&block)
   end
 
 end

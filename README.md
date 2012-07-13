@@ -20,7 +20,22 @@ Cartographie.map('San Francisco, CA')
 Cartographie.map('New York, NY', width: 200, height: 200, zoom: 10)
 ```
 
+**Configuration**
+
+```ruby
+Cartographie.configure do |config|
+  config.width = 640
+  config.height = 640
+  config.zoom = 12
+  config.file_format = 'jpg'
+  config.sensor = true
+end
+```
+
 **Defaults**
+
+If you do not pass options when generating a map, nor configure a map attribute
+using the configuration block, the following values will be used:
 
 - width: 300
 - height: 300

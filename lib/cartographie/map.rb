@@ -11,13 +11,6 @@ module Cartographie
     # Public: Gets/Sets the Hash options for the map.
     attr_accessor :options
 
-    API_ENDPOINT        = 'http://maps.googleapis.com/maps/api/staticmap'
-    DEFAULT_WIDTH       = 300
-    DEFAULT_HEIGHT      = 300
-    DEFAULT_ZOOM        = 15
-    DEFAULT_FILE_FORMAT = 'png'
-    DEFAULT_SENSOR      = false
-
     # Public: Initialize a Map
     #
     # location - The String for the map's location (default: 'Paris, France').
@@ -55,27 +48,27 @@ module Cartographie
 
     # Returns the Integer width passed in options, or default
     def width
-      options[:width] || DEFAULT_WIDTH
+      options[:width] || Config.width
     end
 
     # Returns the Integer height passed in options, or default
     def height
-      options[:height] || DEFAULT_HEIGHT
+      options[:height] || Config.height
     end
 
     # Returns the Integer zoom level passed in options, or default
     def zoom
-      options[:zoom] || DEFAULT_ZOOM
+      options[:zoom] || Config.zoom
     end
 
     # Returns the String file format passed in options, or default
     def file_format
-      options[:file_format] || DEFAULT_FILE_FORMAT
+      options[:file_format] || Config.file_format
     end
 
     # Returns the Boolean indicating sensor usage passed in options, or default
     def sensor
-      options[:sensor] || DEFAULT_SENSOR
+      options[:sensor] || Config.sensor
     end
 
     # Returns a string combining width and height into dimensions
@@ -86,7 +79,7 @@ module Cartographie
     private
 
     def api_endpoint
-      API_ENDPOINT
+      Config.api_endpoint
     end
   end
 end
