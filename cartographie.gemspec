@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mattonrails@shortmail.com"]
   gem.description   = %q{Beautiful map generation}
   gem.summary       = %q{Wrapper for Google's Static Maps API}
-  gem.homepage      = "http://github.com/mattonrails/cartographie"
+  gem.homepage      = "http://mattonrails.github.com/cartographie/"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
