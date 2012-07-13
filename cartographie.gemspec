@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Cartographie::VERSION
 
+  gem.add_dependency("addressable")
   gem.add_development_dependency("rake")
   gem.add_development_dependency("rspec", "~>2.11")
 end

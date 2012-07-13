@@ -1,3 +1,5 @@
+require 'addressable/uri'
+
 module Cartographie
   # Map represents a map, and contains the details regarding a
   # map's dimensions, zoom level, the image file format, and whether a GPS
@@ -9,6 +11,7 @@ module Cartographie
     # Public: Gets/Sets the Hash options for the map.
     attr_accessor :options
 
+    API_ENDPOINT        = 'http://maps.googleapis.com/maps/api/staticmap'
     DEFAULT_WIDTH       = 300
     DEFAULT_HEIGHT      = 300
     DEFAULT_ZOOM        = 15
@@ -32,6 +35,23 @@ module Cartographie
       self.location = location
       self.options = options
     end
+
+    # Public: Build a Google Static Maps image URI
+    #
+    # Returns the String URI pointing an image of the map
+    def uri
+      params = {
+        center: location,
+        size: size,
+        zoom: zoom,
+        format: file_format,
+        sensor: sensor.to_s
+      }
+      Addressable::URI.parse(api_endpoint).tap do |uri|
+        uri.query_values = params
+      end.to_s
+    end
+    alias to_s uri
 
     # Returns the Integer width passed in options, or default
     def width
@@ -61,6 +81,12 @@ module Cartographie
     # Returns a string combining width and height into dimensions
     def size
       "#{width}x#{height}"
+    end
+
+    private
+
+    def api_endpoint
+      API_ENDPOINT
     end
   end
 end
