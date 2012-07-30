@@ -1,4 +1,4 @@
-# Cartographie
+# Cartographie [![Build Status](https://secure.travis-ci.org/mattonrails/cartographie.png?branch=master)](http://travis-ci.org/mattonrails/cartographie)
 
 Cartographie is a wrapper for Google's Static Maps API
 
