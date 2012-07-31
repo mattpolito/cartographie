@@ -8,22 +8,23 @@ module Cartographie
 
   # Public: Create a new Map instance.
   #
-  # location - The String for the map's location (default: 'Paris, France').
   # options  - The Hash options used to configure the map (default: {}):
+  #            :center      - The center point on the map (optional if markers
+  #            provided)
   #            :width       - The Integer width of the map (optional).
   #            :height      - The Integer height of the map (optional).
   #            :zoom        - The Integer zoom level (optional).
   #            :file_format - The String file format for the image (optional).
   #            :sensor      - The Boolean indicating GPS usage (optional).
   #
+  #
   # Examples
   #
-  #   Cartographie.map('Tokyo, Japan')
-  #   Cartographie.map('San Francisco, CA', zoom: 10)
+  #   Cartographie.map(center: 'San Francisco, CA', zoom: 10)
   #
   # Returns an instance of Cartographie::Map
-  def self.map(location = 'Paris, France', options={})
-    Map.new(location, options)
+  def self.map(options={})
+    Map.new(options)
   end
 
   def self.configure(&block)

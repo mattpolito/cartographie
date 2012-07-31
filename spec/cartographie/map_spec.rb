@@ -8,25 +8,28 @@ describe Cartographie::Map do
 
   let(:points) { ["Empire State Building", "40.704154,-73.99459", "Guggenheim Museum"] }
 
-  describe 'with options' do
-    let(:options) { { width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true, points: points } }
+  describe 'initialize map' do
 
-    subject { described_class.new 'New York, NY', options }
+    context "valid options" do
+      let(:options) { { center: 'New York, NY', width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true, points: points } }
 
-    its(:location) { should eq('New York, NY') }
-    its(:width) { should eq(75) }
-    its(:height) { should eq(75) }
-    its(:size) { should eq('75x75') }
-    its(:zoom) { should eq(10) }
-    its(:file_format) { should eq('jpg') }
-    its(:sensor) { should be_true }
-    its(:points) { should =~ (points) }
+      subject { described_class.new options }
+
+      its(:center) { should eq('New York, NY') }
+      its(:width) { should eq(75) }
+      its(:height) { should eq(75) }
+      its(:size) { should eq('75x75') }
+      its(:zoom) { should eq(10) }
+      its(:file_format) { should eq('jpg') }
+      its(:sensor) { should be_true }
+      its(:points) { should =~ (points) }
+    end
   end
 
   describe "#additional_markers" do
 
     context "no additional markers" do
-      let(:map) { described_class.new('New York, NY') }
+      let(:map) { described_class.new() }
 
       subject { map.additional_markers }
 
@@ -37,7 +40,7 @@ describe Cartographie::Map do
 
     context 'mixed array to string' do
       let(:options) { { points: points } }
-      let(:map) { described_class.new('New York, NY', options) }
+      let(:map) { described_class.new(options) }
 
       subject { map.additional_markers }
 
@@ -50,8 +53,8 @@ describe Cartographie::Map do
   describe '#query_string' do
 
     context 'build query string from hash of params' do
-      let(:options) { { width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true } }
-      let(:map) { described_class.new('Tokyo', options) }
+      let(:options) { { center: 'Tokyo', width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true } }
+      let(:map) { described_class.new(options) }
 
       subject { map.query_string }
 
@@ -61,8 +64,8 @@ describe Cartographie::Map do
     end
 
     context 'build query string from params hash with additional points' do
-      let(:options) { { width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true, points: ['Eiffel Tower', 'Louvre'] } }
-      let(:map) { described_class.new('Paris, FR', options) }
+      let(:options) { { center: 'Paris, FR', width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true, points: ['Eiffel Tower', 'Louvre'] } }
+      let(:map) { described_class.new(options) }
 
       subject { map.query_string }
 
@@ -75,7 +78,7 @@ describe Cartographie::Map do
   describe '#uri' do
 
     context 'single marker uri' do
-      let(:map) { described_class.new 'Tokyo' }
+      let(:map) { described_class.new center: 'Tokyo' }
 
       subject { map.uri }
 
@@ -87,8 +90,8 @@ describe Cartographie::Map do
         subject.should include('http://maps.googleapis.com/maps/api/staticmap')
       end
 
-      it 'contains the map location' do
-        subject.should include(map.location)
+      it 'contains the map center' do
+        subject.should include(map.center)
       end
 
       it 'contains the map size, like 640x640' do
@@ -109,8 +112,8 @@ describe Cartographie::Map do
     end
 
     context 'multiple markers' do
-      let(:options) { { points: points } }
-      let(:map) { described_class.new('New York, NY', options) }
+      let(:options) { { center: 'New York, NY', points: points } }
+      let(:map) { described_class.new(options) }
 
       subject { map.uri }
 

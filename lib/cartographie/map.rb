@@ -7,26 +7,25 @@ module Cartographie
   # sensor was used in determining the map's location.
   class Map
 
-    # Public: Gets/Sets the String location of the map.
-    attr_accessor :location
     # Public: Gets/Sets the Hash options for the map.
     attr_accessor :options
 
     # Public: Initialize a Map
     #
-    # location - The String for the map's location (default: 'Paris, France').
     # options  - The Hash options used to configure the map (default: {}):
+    #            :center      - The center point on the map (optional if
+    #            markers supplied).
     #            :width       - The Integer width of the map (optional).
     #            :height      - The Integer height of the map (optional).
     #            :zoom        - The Integer zoom level (optional).
     #            :file_format - The String file format for the image (optional).
     #            :sensor      - The Boolean indicating GPS usage (optional).
+    #            :points      - Additional points to be shown (optional).
     #
     # Examples
     #
-    #   Cartographie::Map.new('San Francisco, CA', zoom: 10)
-    def initialize(location='Paris, France', options={})
-      self.location = location
+    #   Cartographie::Map.new(center: 'San Francisco, CA', zoom: 10)
+    def initialize(options={})
       self.options = options
     end
 
@@ -43,7 +42,7 @@ module Cartographie
     # Returns the uri query string
     def query_string
       params = {
-        center: location,
+        center: center,
         size: size,
         zoom: zoom,
         format: file_format,
@@ -57,6 +56,11 @@ module Cartographie
     # Returns a formatted string of additional locations
     def additional_markers
       points.join('|').gsub(/\s/, '+')
+    end
+
+    # Returns the Center point passed in options, or default
+    def center
+      options[:center] || Config.center
     end
 
     # Returns the Integer width passed in options, or default
