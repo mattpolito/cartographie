@@ -1,4 +1,5 @@
 require 'addressable/uri'
+require 'cartographie/config'
 
 module Cartographie
   # Map represents a map, and contains the details regarding a
@@ -46,6 +47,10 @@ module Cartographie
     end
     alias to_s uri
 
+    def additional_points
+      points.join('|')
+    end
+
     # Returns the Integer width passed in options, or default
     def width
       options[:width] || Config.width
@@ -74,6 +79,11 @@ module Cartographie
     # Returns a string combining width and height into dimensions
     def size
       "#{width}x#{height}"
+    end
+
+    # Returns an Array with additional map points
+    def points
+      options[:points] || Config.points
     end
 
     private

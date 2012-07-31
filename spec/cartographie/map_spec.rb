@@ -5,10 +5,11 @@ describe Cartographie::Map do
 
   subject { described_class.new }
 
+  let(:points) { ["Empire State Building", "40.704154,-73.99459", "Guggenheim Museum"] }
+
   describe 'with options' do
-    let(:options) do
-      { width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true }
-    end
+    let(:options) { { width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true, points: points } }
+
     subject { described_class.new 'New York, NY', options }
 
     its(:location) { should eq('New York, NY') }
@@ -18,6 +19,31 @@ describe Cartographie::Map do
     its(:zoom) { should eq(10) }
     its(:file_format) { should eq('jpg') }
     its(:sensor) { should be_true }
+    its(:points) { should =~ (points) }
+  end
+
+  describe "#additional_points" do
+
+    context "no additional points" do
+      let(:map) { described_class.new('New York, NY') }
+
+      subject { map.additional_points }
+
+      it 'returns an emtpy string' do
+        subject.should be_empty
+      end
+    end
+
+    context 'mixed array to string' do
+      let(:options) { { points: points } }
+      let(:map) { described_class.new('New York, NY', options) }
+
+      subject { map.additional_points }
+
+      it 'returns a pipe seperated string' do
+        subject.should eq("Empire State Building|40.704154,-73.99459|Guggenheim Museum")
+      end
+    end
   end
 
   describe '#uri' do
