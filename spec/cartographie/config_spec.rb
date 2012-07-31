@@ -12,6 +12,7 @@ describe Cartographie::Config do
     its(:zoom) { should eq(15) }
     its(:file_format) { should eq('png') }
     its(:sensor) { should be_false }
+    its(:points) { should eq([]) }
   end
 
   describe "setting new defaults" do
@@ -22,6 +23,7 @@ describe Cartographie::Config do
         config.zoom = 10
         config.file_format = 'jpg'
         config.sensor = true
+        config.points = ["Eiffel Tower", "Louvre"]
       end
     end
 
@@ -30,5 +32,6 @@ describe Cartographie::Config do
     its(:zoom) { should eq(10) }
     its(:file_format) { should eq('jpg') }
     its(:sensor) { should be_true }
+    its(:points) { should =~ (["Eiffel Tower", "Louvre"]) }
   end
 end

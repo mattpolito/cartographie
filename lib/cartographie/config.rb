@@ -50,6 +50,14 @@ module Cartographie
       OPTIONS[:sensor] = value
     end
 
+    def points
+      OPTIONS[:points]
+    end
+
+    def points=(value)
+      OPTIONS[:points] = value
+    end
+
     private
 
     DEFAULTS = {
@@ -58,7 +66,8 @@ module Cartographie
       height: 300,
       zoom: 15,
       file_format: 'png',
-      sensor: false
+      sensor: false,
+      points: []
     }
     OPTIONS = {}.merge!(DEFAULTS)
   end
