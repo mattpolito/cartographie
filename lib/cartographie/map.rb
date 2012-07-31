@@ -1,5 +1,5 @@
-require 'addressable/uri'
 require 'cartographie/config'
+require 'uri'
 
 module Cartographie
   # Map represents a map, and contains the details regarding a
@@ -34,21 +34,29 @@ module Cartographie
     #
     # Returns the String URI pointing an image of the map
     def uri
+      URI.parse(api_endpoint).tap do |uri|
+        uri.query = query_string
+      end.to_s
+    end
+    alias to_s uri
+
+    # Returns the uri query string
+    def query_string
       params = {
         center: location,
         size: size,
         zoom: zoom,
         format: file_format,
-        sensor: sensor.to_s
+        sensor: sensor.to_s,
+        markers: additional_markers
       }
-      Addressable::URI.parse(api_endpoint).tap do |uri|
-        uri.query_values = params
-      end.to_s
-    end
-    alias to_s uri
 
-    def additional_points
-      points.join('|')
+      URI.escape(params.map { |k,v| "#{k}=#{v}" unless v.to_s.empty? }.compact.join('&'))
+    end
+
+    # Returns a formatted string of additional locations
+    def additional_markers
+      points.join('|').gsub(/\s/, '+')
     end
 
     # Returns the Integer width passed in options, or default
