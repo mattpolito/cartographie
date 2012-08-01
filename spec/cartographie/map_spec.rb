@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'cartographie/map'
+require 'cartographie/exceptions'
 require 'uri'
 
 describe Cartographie::Map do
@@ -24,12 +25,16 @@ describe Cartographie::Map do
       its(:sensor) { should be_true }
       its(:points) { should =~ (points) }
     end
+
+    context "no center or points" do
+      it { lambda{ described_class.new }.should raise_error(Cartographie::MissingCenterOrMapPoint) }
+    end
   end
 
   describe "#additional_markers" do
 
     context "no additional markers" do
-      let(:map) { described_class.new() }
+      let(:map) { described_class.new center: 'New York, NY' }
 
       subject { map.additional_markers }
 
