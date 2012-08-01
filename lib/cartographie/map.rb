@@ -51,8 +51,9 @@ module Cartographie
         size: size,
         zoom: zoom,
         format: file_format,
-        sensor: sensor.to_s,
-        markers: additional_markers
+        maptype: maptype,
+        markers: additional_markers,
+        sensor: sensor.to_s
       }
 
       URI.escape(params.map { |k,v| "#{k}=#{v}" unless v.to_s.empty? }.compact.join('&'))
@@ -103,7 +104,16 @@ module Cartographie
       options[:points] || Config.points
     end
 
+    def maptype
+      valid_map_types.select { |type| type if type == options[:maptype] }.join
+    end
+
     private
+
+    # Does not include 'roadmap' because it is the google default
+    def valid_map_types
+      ["satellite", "terrain", "hybrid"]
+    end
 
     def api_endpoint
       options[:api_endpoint] || Config.api_endpoint

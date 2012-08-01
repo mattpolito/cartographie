@@ -80,7 +80,7 @@ module Cartographie
       zoom: 15,
       file_format: 'png',
       sensor: false,
-      points: []
+      points: [],
     }
     OPTIONS = {}.merge!(DEFAULTS)
   end

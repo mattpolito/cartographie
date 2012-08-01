@@ -13,7 +13,17 @@ describe Cartographie::Map do
 
     context "valid options" do
       let(:options) do
-        { center: 'New York, NY', width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true, api_endpoint: 'endpoint', points: points }
+        {
+          center: 'New York, NY',
+          width: 75,
+          height: 75,
+          zoom: 10,
+          file_format: 'jpg',
+          sensor: true,
+          maptype: 'satellite',
+          points: points,
+          api_endpoint: 'endpoint'
+        }
       end
 
       subject { described_class.new(options) }
@@ -27,6 +37,7 @@ describe Cartographie::Map do
       its(:sensor) { should be_true }
       its(:api_endpoint) { should eq('endpoint') }
       its(:points) { should =~ (points) }
+      its(:maptype) { should eq('satellite') }
     end
 
     context "no center or points" do
@@ -79,7 +90,18 @@ describe Cartographie::Map do
     end
 
     context 'build query string from hash of params' do
-      let(:options) { { center: 'Tokyo', width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true } }
+      let(:options) { { center: 'Tokyo', width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true, maptype: 'satellite' } }
+      let(:map) { described_class.new(options) }
+
+      subject { map.query_string }
+
+      it 'returns a formatted query string' do
+        subject.should eq('center=Tokyo&size=300x300&zoom=10&format=jpg&maptype=satellite&sensor=true')
+      end
+    end
+
+    context 'omit maptype if set to roadmap' do
+      let(:options) { { center: 'Tokyo', width: 300, height: 300, zoom: 10, file_format: 'jpg', sensor: true, maptype: 'roadmap' } }
       let(:map) { described_class.new(options) }
 
       subject { map.query_string }
@@ -96,7 +118,7 @@ describe Cartographie::Map do
       subject { map.query_string }
 
       it 'returns a formatted query string with additional markers' do
-        subject.should eq('center=Paris,%20FR&size=300x300&zoom=10&format=jpg&sensor=true&markers=Eiffel+Tower%7CLouvre')
+        subject.should eq('center=Paris,%20FR&size=300x300&zoom=10&format=jpg&markers=Eiffel+Tower%7CLouvre&sensor=true')
       end
     end
   end
@@ -146,6 +168,33 @@ describe Cartographie::Map do
       it 'contains the map additional markers' do
         subject.should include(URI.escape(map.additional_markers))
       end
+    end
+  end
+
+  describe '#maptype' do
+
+    context "valid map type" do
+      let(:map) { described_class.new(center: 'New York, NY', maptype: 'satellite') }
+
+      subject { map.maptype }
+
+      it { should eq('satellite') }
+    end
+
+    context 'returns an empty string' do
+      let(:map) { described_class.new(center: 'New York, NY', maptype: 'roadmap') }
+
+      subject { map.maptype }
+
+      it { should be_empty }
+    end
+
+    context 'handles erroneous values' do
+      let(:map) { described_class.new(center: 'New York, NY', maptype: 'road_map_satellite') }
+
+      subject { map.maptype }
+
+      it { should be_empty }
     end
   end
 end
