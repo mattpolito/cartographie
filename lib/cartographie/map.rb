@@ -1,4 +1,5 @@
 require 'cartographie/config'
+require 'cartographie/exceptions'
 require 'uri'
 
 module Cartographie
@@ -27,6 +28,10 @@ module Cartographie
     #   Cartographie::Map.new(center: 'San Francisco, CA', zoom: 10)
     def initialize(options={})
       self.options = options
+
+      if self.center.empty? && self.points.empty?
+        raise Cartographie::MissingCenterOrMapPoint, 'provide a center or map points'
+      end
     end
 
     # Public: Build a Google Static Maps image URI
