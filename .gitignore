@@ -2,6 +2,9 @@
 *.rbc
 .bundle
 .config
+.rbenv-gemsets
+.rbenv-version
+.rvmrc
 .yardoc
 Gemfile.lock
 InstalledFiles
