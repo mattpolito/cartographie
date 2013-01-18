@@ -10,6 +10,14 @@ module Cartographie
       OPTIONS[:api_endpoint]
     end
 
+    def center
+      OPTIONS[:center]
+    end
+
+    def center=(value)
+      OPTIONS[:center] = value
+    end
+
     def width
       OPTIONS[:width]
     end
@@ -50,15 +58,25 @@ module Cartographie
       OPTIONS[:sensor] = value
     end
 
+    def points
+      OPTIONS[:points]
+    end
+
+    def points=(value)
+      OPTIONS[:points] = value
+    end
+
     private
 
     DEFAULTS = {
       api_endpoint: 'http://maps.googleapis.com/maps/api/staticmap',
+      center: '',
       width: 300,
       height: 300,
       zoom: 15,
       file_format: 'png',
-      sensor: false
+      sensor: false,
+      points: [],
     }
     OPTIONS = {}.merge!(DEFAULTS)
   end

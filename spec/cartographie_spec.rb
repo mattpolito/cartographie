@@ -3,7 +3,8 @@ require 'cartographie'
 
 describe Cartographie do
 
-  subject { described_class.map }
+  let(:center) { { center: 'Paris, France' } }
+  subject { described_class.map center }
 
   describe '.map' do
     class Cartographie::Map
