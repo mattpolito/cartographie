@@ -7,7 +7,7 @@ describe Cartographie::Map do
 
   describe 'with options' do
     let(:options) do
-      { width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true }
+      { width: 75, height: 75, zoom: 10, file_format: 'jpg', sensor: true, api_endpoint: 'endpoint' }
     end
     subject { described_class.new 'New York, NY', options }
 
@@ -18,6 +18,7 @@ describe Cartographie::Map do
     its(:zoom) { should eq(10) }
     its(:file_format) { should eq('jpg') }
     its(:sensor) { should be_true }
+    its(:api_endpoint) { should eq('endpoint') }
   end
 
   describe '#uri' do

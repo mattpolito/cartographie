@@ -76,10 +76,8 @@ module Cartographie
       "#{width}x#{height}"
     end
 
-    private
-
     def api_endpoint
-      Config.api_endpoint
+      options[:api_endpoint] || Config.api_endpoint
     end
   end
 end
