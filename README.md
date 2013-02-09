@@ -3,7 +3,8 @@
 [![Build Status](https://secure.travis-ci.org/mattonrails/cartographie.png?branch=master)](http://travis-ci.org/mattonrails/cartographie)
 [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mattonrails/cartographie)
 
-Cartographie is a wrapper for Google's Static Maps API
+Cartographie is a wrapper for Google's Static Maps API, but it can support your
+own custom API, too!
 
 ## Installation
 
@@ -27,6 +28,7 @@ Cartographie.map('New York, NY', width: 200, height: 200, zoom: 10)
 
 ```ruby
 Cartographie.configure do |config|
+  config.api_endpoint = 'http://example.com/api/map'
   config.width = 640
   config.height = 640
   config.zoom = 12
@@ -40,6 +42,7 @@ end
 If you do not pass options when generating a map, nor configure a map attribute
 using the configuration block, the following values will be used:
 
+- api endpoint: 'http://maps.googleapis.com/maps/api/staticmap'
 - width: 300
 - height: 300
 - zoom: 15
