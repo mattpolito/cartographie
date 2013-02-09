@@ -56,3 +56,9 @@ using the configuration block, the following values will be used:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Thanks
+
+- @nurugger07
+- @mattpolito
+- @bthesorceror
