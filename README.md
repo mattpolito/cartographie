@@ -1,7 +1,7 @@
 # Cartographie
 
 [![Build Status](https://secure.travis-ci.org/mattonrails/cartographie.png?branch=master)](http://travis-ci.org/mattonrails/cartographie)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/mattonrails/cartographie)
+[![Code Climate](https://codeclimate.com/github/mattonrails/cartographie.png)](https://codeclimate.com/github/mattonrails/cartographie)
 
 Cartographie is a wrapper for Google's Static Maps API, but it can support your
 own custom API, too!
