@@ -6,6 +6,10 @@ module Cartographie
       yield self
     end
 
+    def reset
+      OPTIONS.replace DEFAULTS
+    end
+
     def api_endpoint
       OPTIONS[:api_endpoint]
     end
