@@ -3,7 +3,6 @@ require 'cartographie'
 require 'cartographie/config'
 
 describe Cartographie::Config do
-  subject { Cartographie::Config }
   after { Cartographie::Config.reset }
 
   describe "default configs" do
