@@ -2,11 +2,11 @@
 require File.expand_path('../lib/cartographie/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Matthew Conway"]
-  gem.email         = ["mattonrails@shortmail.com"]
+  gem.authors       = ["Matt Polito", "Matthew Conway"]
+  gem.email         = ["matt.polito@gmail.com"]
   gem.description   = %q{Beautiful map generation}
   gem.summary       = %q{Wrapper for Google's Static Maps API}
-  gem.homepage      = "http://mattonrails.github.com/cartographie/"
+  gem.homepage      = "https://github.com/mattpolito/cartographie"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
